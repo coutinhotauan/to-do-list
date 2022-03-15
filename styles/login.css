@@ -1,0 +1,77 @@
+.container{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F3F3F3;
+}
+
+.login-form-area{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    height: 500px;
+    width: 480px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.login-form-area form{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    width: 380px;
+    padding: 10px;
+}
+
+.login-form-area form input{
+    margin-bottom: 10px;
+    height: 30px;
+    border-radius: 5px;
+    border: 0;
+    padding: 2px;
+    background-color: #F1ECFD;
+}
+
+.login-form-area form input:focus{
+    outline: none;
+}
+
+.login-form-area form .btn-area{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.login-form-area form button{
+    width: 180px;
+    height: 30px;
+    background-color: #0066FF;
+    color: #fff;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 5px;
+    transition: ease-in 0.2s;
+}
+
+.login-form-area form button:hover{
+    background-color: #23E4F0;
+    transform: scale(1.1);
+}
+
+.login-form-area a{
+    margin-top: 15px;
+    color: #0066FF;
+    font-size: 0.8em;
+    text-decoration: underline;
+    transition: ease-in 0.2s;
+}
+
+.login-form-area a:hover{
+    color: #23E4F0;
+    transform: scale(1.1);
+}
+
