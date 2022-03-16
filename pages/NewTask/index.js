@@ -1,7 +1,11 @@
 import UserBar from '../../components/UserBar';
 import Title from '../../components/Title';
 import { FaPlus } from 'react-icons/fa';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import firebase from '../../services/firebaseConnection';
+import { AuthContext } from "../../contexts/auth";
 
 export default function NewTask(){
 
@@ -9,11 +13,45 @@ export default function NewTask(){
     const [priority, setPriority] = useState(0);
     const [description, setDescription] = useState('');
 
-    function handleNewTask(){
+    const {userData} = useContext(AuthContext);
 
-    }
+    console.log(userData);
 
-    function handleChangePriority(){
+    async function handleNewTask(e){
+
+        e.preventDefault();
+
+        let uid = userData.uid;
+        let date = new Date();
+        let todayDate = date.getDay() + '-' + (date.getMonth()+1) + '-' + date.getFullYear();
+        let todayHour = data.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        let today = todayDate + ' ' + todayHour;
+
+        if( !title || !description){
+            toast.warning('Fill in all fields!');
+            return;
+        }
+
+        await firebase.firestore().collection('tasks')
+        .add({
+            title: title,
+            priority: priority,
+            description: description,
+            status: 0,
+            createdAt: today,
+            user: uid,
+        })
+        then(() => {
+            console.log('task created with success');
+            setTitle('');
+            setPriority(0);
+            setDescription('');
+            toast.success('Task created with success!');
+        })
+        .catch((err)=>{
+            console.log('error during task creation: ' + err);
+            toast.error('Error during task creation');
+        })
 
     }
 
@@ -39,8 +77,8 @@ export default function NewTask(){
 
                             <div className='priority-area'>
                                 <label>Priority</label>
-                                <select onChange={handleChangePriority}>
-                                    <option selected value={0}>Low</option>
+                                <select onChange={(e) => {setPriority(e.target.value)}}>
+                                    <option value={0}>Low</option>
                                     <option value={1}>Medium</option>
                                     <option value={2}>High</option>
                                 </select>
@@ -55,6 +93,8 @@ export default function NewTask(){
                         <button type='submit' className='btn-add-task'>submit</button>
                     </form>
                 </div>
+
+                <ToastContainer autoClose={3000}/>
 
             </div>
 

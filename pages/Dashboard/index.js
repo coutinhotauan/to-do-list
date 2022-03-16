@@ -3,11 +3,16 @@ import UserBar from "../../components/UserBar";
 import Title from "../../components/Title";
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Dashboard(){
 
     return(
+
         <div className="container-logged">
+
+            {toast.success('Welcome!')}
 
             <UserBar/>
 
@@ -28,11 +33,13 @@ export default function Dashboard(){
                 <div className='tasks'>
                     <table>
                         <thead>
-                            <th scope='col'>Task</th>
-                            <th scope='col'>Created at</th>
-                            <th scope='col'>Priority</th>
-                            <th scope='col'>Status</th>
-                            <th scope='col'>#</th>
+                            <tr>
+                                <th scope='col'>Task</th>
+                                <th scope='col'>Created at</th>
+                                <th scope='col'>Priority</th>
+                                <th scope='col'>Status</th>
+                                <th scope='col'>#</th>
+                            </tr>
                         </thead>
 
                         <tbody>
@@ -49,7 +56,8 @@ export default function Dashboard(){
 
             </div>
 
-            
+            <ToastContainer autoClose='3000'/>
+
         </div>
     );
 

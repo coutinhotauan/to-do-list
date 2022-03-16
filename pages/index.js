@@ -1,53 +1,50 @@
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../assets/images/logo.png";
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import firebase from '../services/firebaseConnection';
 import { useRouter } from "next/router";
+import { AuthContext } from "../contexts/auth";
+import firebase from '../services/firebaseConnection';
 
 export default function Home() {
-
-  const router = useRouter();
 
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  function storageUser(data){
+  const router = useRouter();
 
-    localStorage.setItem('to-do-list-users', JSON.stringify(data));
-
-  }
+  const { setUserData } = useContext(AuthContext);
 
   async function signIn(user, password){
 
     setLoading(true);
     await firebase.auth().signInWithEmailAndPassword(user, password)
     .then( async (value) => {
-      
-      let uid = value.user.uid;
+        
+        let uid = value.user.uid;
 
-      const userProfile = await firebase.firestore().collection('users')
-      .doc(uid).get();
+        const userProfile = await firebase.firestore().collection('users')
+        .doc(uid).get();
 
-      let data = {
-        uid: uid,
-        name: userProfile.data().name,
-        avatarURL: userProfile.data().avatarURL,
-        user: userProfile.data().user
-      }
+        let data = {
+            uid: uid,
+            name: userProfile.data().name,
+            avatarURL: userProfile.data().avatarURL,
+            user: value.user.email
+        };
 
-      storageUser(data);
-      setLoading(false);
-      router.push("/Dashboard");
+        setUserData(data);
+        setLoading(false);
+        router.push("/Dashboard");
 
     })
     .catch((err) => {
-      console.log('error: ' + err);
-      toast.error('Error during sign in');
-      setLoading(false);
+        console.log('error: ' + err);
+        toast.error('Error during sign in');
+        setLoading(false);
     })
 
   }
