@@ -1,0 +1,17 @@
+.container-logged{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: #F3F3F3;
+}
+
+.content{
+    margin-top: 50px;
+    margin-left: 250px;
+    margin-right: 50px;
+    padding-right: 50px;
+    padding-left: 50px;
+    display: flex;
+    flex-direction: column;
+}
